@@ -86,6 +86,7 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         checkBoxSpatialSummary = new javax.swing.JCheckBox();
         checkBoxAddRunsToResults = new javax.swing.JCheckBox();
+        checkBoxSaveContributionsPerSimulation = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -161,7 +162,7 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         jLabel6.setText("Output");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, -1, -1));
 
         checkBoxMissingStressorData.setSelected(true);
         checkBoxMissingStressorData.setText("Missing stressor data");
@@ -189,7 +190,7 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
 
         checkBoxMultiAdditive.setSelected(true);
         checkBoxMultiAdditive.setText("Additive");
-        getContentPane().add(checkBoxMultiAdditive, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, -1, -1));
+        getContentPane().add(checkBoxMultiAdditive, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, -1, -1));
 
         checkBoxMultiWorst.setSelected(true);
         checkBoxMultiWorst.setText("Worst stressor");
@@ -198,11 +199,11 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
                 checkBoxMultiWorstActionPerformed(evt);
             }
         });
-        getContentPane().add(checkBoxMultiWorst, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, -1, -1));
+        getContentPane().add(checkBoxMultiWorst, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 325, -1, -1));
 
         checkBoxMultiDiminish.setSelected(true);
         checkBoxMultiDiminish.setText("Diminishing Impacts");
-        getContentPane().add(checkBoxMultiDiminish, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
+        getContentPane().add(checkBoxMultiDiminish, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, -1, -1));
 
         textFieldThresholdsMax.setText("1");
         getContentPane().add(textFieldThresholdsMax, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 50, -1));
@@ -271,11 +272,15 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
 
         checkBoxSpatialSummary.setSelected(true);
         checkBoxSpatialSummary.setText("Spatial summary (much slower processing!)");
-        getContentPane().add(checkBoxSpatialSummary, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, -1, -1));
+        getContentPane().add(checkBoxSpatialSummary, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, -1, -1));
 
         checkBoxAddRunsToResults.setSelected(true);
         checkBoxAddRunsToResults.setText("Show simulation runs in project results");
-        getContentPane().add(checkBoxAddRunsToResults, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, -1, -1));
+        getContentPane().add(checkBoxAddRunsToResults, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, -1, -1));
+
+        checkBoxSaveContributionsPerSimulation.setSelected(true);
+        checkBoxSaveContributionsPerSimulation.setText("Save impact contributions for each simulation");
+        getContentPane().add(checkBoxSaveContributionsPerSimulation, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -390,6 +395,8 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
        
        mcm.createSpatialOutputs = this.checkBoxSpatialSummary.isSelected();
        mcm.addRunsToResults = this.checkBoxAddRunsToResults.isSelected();
+       mcm.saveContributionsPerSimulation = this.checkBoxSaveContributionsPerSimulation.isSelected();
+       
        
        if(!this.checkBoxImpactsAsSum.isSelected() && !this.checkBoxImpactsAsMean.isSelected())
        {error="At least one impact model for multiple ecological components in a cell must be selected.";}
@@ -470,6 +477,7 @@ public class MonteCarloRanksDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox checkBoxMultiWorst;
     private javax.swing.JCheckBox checkBoxPointStressDecay;
     private javax.swing.JCheckBox checkBoxReducedAnalysisRes;
+    private javax.swing.JCheckBox checkBoxSaveContributionsPerSimulation;
     private javax.swing.JCheckBox checkBoxSensitivtyScoreErrors;
     private javax.swing.JCheckBox checkBoxSpatialSummary;
     private javax.swing.JCheckBox checkBoxThresholds;

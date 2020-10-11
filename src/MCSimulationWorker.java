@@ -31,6 +31,7 @@ public class MCSimulationWorker extends SwingWorker<MCSimulationManager,Void>
                 working=true;
                 //msm.setup();
                 initialized=true;
+                mcm.thread= workerNr;
                 mcm.prefix="Thread "+workerNr+": ";
                 mcm.simulationRuns=sampleSize;
                 mcm.runMCSimulation();  

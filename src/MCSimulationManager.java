@@ -46,6 +46,7 @@ public class MCSimulationManager
     
     public boolean multipleEffectsAdditive=true; public boolean multipleEffectsDominant=true; 
     public boolean multipleEffectsDiminishing=true;
+    public boolean saveContributionsPerSimulation=true;
     
     boolean createSpatialOutputs = true;
     boolean addRunsToResults = true;
@@ -61,6 +62,7 @@ public class MCSimulationManager
     public ArrayList<StressorRankInfo> stressorInfos;
     public ArrayList<EcocompRankInfo> ecocompInfos;
     public ArrayList<RegionRankInfo> regionInfos;
+    public int thread;
     
     public MCSimulationManager clone()
     {
@@ -97,6 +99,8 @@ public class MCSimulationManager
         copy.transformationLog=transformationLog;
         copy.transformationNone=transformationNone;
         copy.transformationPercentile=transformationPercentile;
+        copy.saveContributionsPerSimulation = saveContributionsPerSimulation;
+        copy.thread = thread;
         return copy;
     }
     
@@ -265,6 +269,15 @@ public class MCSimulationManager
                 //simulator.getResult().name="Simulation run "+run;
                 //if(addRunsToResults) {MappingProject.results.add(simulator.getResult());} 
            
+                if(saveContributionsPerSimulation){
+                    // unique file number for each combination of thread/simulation
+                    int fileno = 1 + run + (thread-1)*simulationRuns ;
+                    writeSimulationImpactContributions(fileno,scores,stressorInfos);
+                    
+                    // updateContributions(scores) 
+                    // placeholder for a function to add contributions to a single variable
+                }
+                
                 updateStressorResults(stressorInfos);
                 updateEcocompResults(ecocompInfos);
                 updateRegionResults(regionInfos);
@@ -276,6 +289,30 @@ public class MCSimulationManager
         catch (Exception e) {JOptionPane.showMessageDialog(null, e + e.getStackTrace()[0].toString());}
     }
 
+    public void writeSimulationImpactContributions(int fileno, SensitivityScoreSet scores,ArrayList<StressorRankInfo> stressorInfos)
+    { 
+        // get impact contributions and save to file
+        System.out.println(" Saving impact contributions no "+ fileno);
+        String cont_file = "impact_cont_" + fileno + ".csv";        
+        CsvTable table = scores.getContributionsAsTable();
+        table.writeToFile(new File(outputFolder,cont_file).getAbsolutePath());
+        
+        // save the list of stressors with active status for this simulation
+        String active_file = "active_list_" + fileno + ".csv";
+        CsvTable table_active = new CsvTable();
+        table_active.addColumn("stressor");
+        table_active.addColumn("active");
+        for(int s=0; s<stressorInfos.size(); s++)
+        {
+            StressorRankInfo info = stressorInfos.get(s);
+            ArrayList<String> row = new ArrayList<String>();
+            row.add(info.name);
+            row.add(info.active+"");
+            table_active.addRow(row);
+        }
+        table_active.writeToFile(new File(outputFolder,active_file).getAbsolutePath());
+    }
+    
     public void writeResults()
     {
             writeRegionResults(regionInfos);
